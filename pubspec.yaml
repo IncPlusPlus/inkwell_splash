@@ -6,7 +6,7 @@ repository: https://github.com/ManuelRohrauer/inkwell_splash
 issue_tracker: https://github.com/ManuelRohrauer/inkwell_splash/issues
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=3.4.1 <4.0.0'
 
 dependencies:
   flutter:
