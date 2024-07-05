@@ -38,8 +38,6 @@ class InkWellSplash extends StatefulWidget {
     this.autofocus = false,
     this.statesController,
     this.hoverDuration,
-    this.containedInkWell = false,
-    this.highlightShape = BoxShape.rectangle,
   });
 
   final Widget? child;
@@ -57,8 +55,6 @@ class InkWellSplash extends StatefulWidget {
   final ValueChanged<bool>? onHighlightChanged;
   final ValueChanged<bool>? onHover;
   final MouseCursor? mouseCursor;
-  final bool containedInkWell;
-  final BoxShape highlightShape;
   final Color? focusColor;
   final Color? hoverColor;
   final Color? highlightColor;
@@ -134,11 +130,17 @@ class _InkWellSplashState extends State<InkWellSplash> {
       onTap: (widget.onDoubleTap != null) ? _onTap : widget.onTap,
       // if onDoubleTap is not used from user, then route further to onTap
       onLongPress: widget.onLongPress,
+      onSecondaryTapDown: widget.onSecondaryTapDown,
+      onSecondaryTapUp: widget.onSecondaryTapUp,
+      onSecondaryTapCancel: widget.onSecondaryTapCancel,
       onTapDown: (widget.onDoubleTap != null) ? _onTapDown : widget.onTapDown,
+      onTapUp: widget.onTapUp,
       onTapCancel:
-          (widget.onDoubleTap != null) ? _onTapCancel : widget.onTapCancel,
+      (widget.onDoubleTap != null) ? _onTapCancel : widget.onTapCancel,
+      onSecondaryTap: widget.onSecondaryTap,
       onHighlightChanged: widget.onHighlightChanged,
       onHover: widget.onHover,
+      mouseCursor: widget.mouseCursor,
       focusColor: widget.focusColor,
       hoverColor: widget.hoverColor,
       highlightColor: widget.highlightColor,
