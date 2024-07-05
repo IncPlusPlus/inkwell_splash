@@ -91,7 +91,7 @@ class _InkWellSplashState extends State<InkWellSplash> {
     if (isPressed) {
       isSingleTap = true;
     } else {
-      if(widget.onTap != null) widget.onTap!();
+      if (widget.onTap != null) widget.onTap!();
     }
   }
 
@@ -99,11 +99,11 @@ class _InkWellSplashState extends State<InkWellSplash> {
     isPressed = false;
     if (isSingleTap) {
       isSingleTap = false;
-      if(widget.onTap != null) widget.onTap!();           // call user onTap function
+      if (widget.onTap != null) widget.onTap!(); // call user onTap function
     }
     if (isDoubleTap) {
       isDoubleTap = false;
-      if(widget.onDoubleTap != null) widget.onDoubleTap!();
+      if (widget.onDoubleTap != null) widget.onDoubleTap!();
     }
   }
 
@@ -115,7 +115,7 @@ class _InkWellSplashState extends State<InkWellSplash> {
     } else {
       doubleTapTimer = Timer(widget.doubleTapTime, _doubleTapTimerElapsed);
     }
-    if(widget.onTapDown != null) widget.onTapDown!(details);
+    if (widget.onTapDown != null) widget.onTapDown!(details);
   }
 
   void _onTapCancel() {
@@ -123,7 +123,7 @@ class _InkWellSplashState extends State<InkWellSplash> {
     if (doubleTapTimer != null && doubleTapTimer!.isActive) {
       doubleTapTimer!.cancel();
     }
-    if(widget.onTapCancel != null) widget.onTapCancel!();
+    if (widget.onTapCancel != null) widget.onTapCancel!();
   }
 
   @override
@@ -134,10 +134,9 @@ class _InkWellSplashState extends State<InkWellSplash> {
       onTap: (widget.onDoubleTap != null) ? _onTap : widget.onTap,
       // if onDoubleTap is not used from user, then route further to onTap
       onLongPress: widget.onLongPress,
-      onTapDown: (widget.onDoubleTap != null) ? _onTapDown : widget
-          .onTapDown,
-      onTapCancel: (widget.onDoubleTap != null) ? _onTapCancel : widget
-          .onTapCancel,
+      onTapDown: (widget.onDoubleTap != null) ? _onTapDown : widget.onTapDown,
+      onTapCancel:
+          (widget.onDoubleTap != null) ? _onTapCancel : widget.onTapCancel,
       onHighlightChanged: widget.onHighlightChanged,
       onHover: widget.onHover,
       focusColor: widget.focusColor,
