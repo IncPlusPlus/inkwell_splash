@@ -3,21 +3,28 @@ library inkwell_splash;
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class InkWellSplash extends StatelessWidget {
-  InkWellSplash({
-    Key key,
+class InkwellSplash extends StatelessWidget {
+  const InkwellSplash({
+    Key? key,
     this.child,
     this.onTap,
     this.onDoubleTap,
     this.doubleTapTime = const Duration(milliseconds: 300),
     this.onLongPress,
     this.onTapDown,
+    this.onTapUp,
     this.onTapCancel,
+    this.onSecondaryTap,
+    this.onSecondaryTapUp,
+    this.onSecondaryTapDown,
+    this.onSecondaryTapCancel,
     this.onHighlightChanged,
     this.onHover,
+    this.mouseCursor,
     this.focusColor,
     this.hoverColor,
     this.highlightColor,
+    this.overlayColor,
     this.splashColor,
     this.splashFactory,
     this.radius,
@@ -29,34 +36,46 @@ class InkWellSplash extends StatelessWidget {
     this.canRequestFocus = true,
     this.onFocusChange,
     this.autofocus = false,
-  })  : assert(enableFeedback != null),
-        assert(excludeFromSemantics != null),
-        assert(autofocus != null),
-        assert(canRequestFocus != null),
-        super(key: key);
+    this.statesController,
+    this.hoverDuration,
+    this.containedInkWell = false,
+    this.highlightShape = BoxShape.rectangle,
+  })  : super(key: key);
 
-  final Widget child;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onDoubleTap;
-  final Duration doubleTapTime;
-  final GestureLongPressCallback onLongPress;
-  final GestureTapDownCallback onTapDown;
-  final GestureTapCancelCallback onTapCancel;
-  final ValueChanged<bool> onHighlightChanged;
-  final ValueChanged<bool> onHover;
-  final Color focusColor;
-  final Color hoverColor;
-  final Color highlightColor;
-  final Color splashColor;
-  final InteractiveInkFeatureFactory splashFactory;
-  final double radius;
-  final BorderRadius borderRadius;
-  final ShapeBorder customBorder;
+
+  final Widget? child;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onDoubleTap;
+  final Duration? doubleTapTime;
+  final GestureLongPressCallback? onLongPress;
+  final GestureTapDownCallback? onSecondaryTapDown;
+  final GestureTapUpCallback? onSecondaryTapUp;
+  final GestureTapCallback? onSecondaryTapCancel;
+  final GestureTapDownCallback? onTapDown;
+  final GestureTapUpCallback? onTapUp;
+  final GestureTapCancelCallback? onTapCancel;
+  final GestureTapCallback? onSecondaryTap;
+  final ValueChanged<bool>? onHighlightChanged;
+  final ValueChanged<bool>? onHover;
+  final MouseCursor? mouseCursor;
+  final bool containedInkWell;
+  final BoxShape highlightShape;
+  final Color? focusColor;
+  final Color? hoverColor;
+  final Color? highlightColor;
+  final WidgetStateProperty<Color?>? overlayColor;
+  final Color? splashColor;
+  final InteractiveInkFeatureFactory? splashFactory;
+  final double? radius;
+  final BorderRadius? borderRadius;
+  final ShapeBorder? customBorder;
   final bool enableFeedback;
   final bool excludeFromSemantics;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final bool canRequestFocus;
-  final ValueChanged<bool> onFocusChange;
+  final WidgetStatesController? statesController;
+  final Duration? hoverDuration;
+  final ValueChanged<bool>? onFocusChange;
   final bool autofocus;
 
   Timer doubleTapTimer;
