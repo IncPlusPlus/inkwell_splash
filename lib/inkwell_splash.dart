@@ -3,9 +3,9 @@ library inkwell_splash;
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class InkwellSplash extends StatelessWidget {
-  const InkwellSplash({
-    Key? key,
+class InkWellSplash extends StatefulWidget {
+  const InkWellSplash({
+    super.key,
     this.child,
     this.onTap,
     this.onDoubleTap,
@@ -40,13 +40,12 @@ class InkwellSplash extends StatelessWidget {
     this.hoverDuration,
     this.containedInkWell = false,
     this.highlightShape = BoxShape.rectangle,
-  })  : super(key: key);
-
+  });
 
   final Widget? child;
   final GestureTapCallback? onTap;
   final GestureTapCallback? onDoubleTap;
-  final Duration? doubleTapTime;
+  final Duration doubleTapTime;
   final GestureLongPressCallback? onLongPress;
   final GestureTapDownCallback? onSecondaryTapDown;
   final GestureTapUpCallback? onSecondaryTapUp;
@@ -78,7 +77,12 @@ class InkwellSplash extends StatelessWidget {
   final ValueChanged<bool>? onFocusChange;
   final bool autofocus;
 
-  Timer doubleTapTimer;
+  @override
+  State<InkWellSplash> createState() => _InkWellSplashState();
+}
+
+class _InkWellSplashState extends State<InkWellSplash> {
+  Timer? doubleTapTimer;
   bool isPressed = false;
   bool isSingleTap = false;
   bool isDoubleTap = false;
@@ -87,7 +91,7 @@ class InkwellSplash extends StatelessWidget {
     if (isPressed) {
       isSingleTap = true;
     } else {
-      if(this.onTap != null) this.onTap();
+      if(widget.onTap != null) widget.onTap!();
     }
   }
 
@@ -95,58 +99,61 @@ class InkwellSplash extends StatelessWidget {
     isPressed = false;
     if (isSingleTap) {
       isSingleTap = false;
-      if(this.onTap != null) this.onTap();           // call user onTap function
+      if(widget.onTap != null) widget.onTap!();           // call user onTap function
     }
     if (isDoubleTap) {
       isDoubleTap = false;
-      if(this.onDoubleTap != null) this.onDoubleTap();
+      if(widget.onDoubleTap != null) widget.onDoubleTap!();
     }
   }
 
   void _onTapDown(TapDownDetails details) {
     isPressed = true;
-    if (doubleTapTimer != null && doubleTapTimer.isActive) {
+    if (doubleTapTimer != null && doubleTapTimer!.isActive) {
       isDoubleTap = true;
-      doubleTapTimer.cancel();
+      doubleTapTimer!.cancel();
     } else {
-      doubleTapTimer = Timer(doubleTapTime, _doubleTapTimerElapsed);
+      doubleTapTimer = Timer(widget.doubleTapTime, _doubleTapTimerElapsed);
     }
-    if(this.onTapDown != null) this.onTapDown(details);
+    if(widget.onTapDown != null) widget.onTapDown!(details);
   }
 
   void _onTapCancel() {
     isPressed = isSingleTap = isDoubleTap = false;
-    if (doubleTapTimer != null && doubleTapTimer.isActive) {
-      doubleTapTimer.cancel();
+    if (doubleTapTimer != null && doubleTapTimer!.isActive) {
+      doubleTapTimer!.cancel();
     }
-    if(this.onTapCancel != null) this.onTapCancel();
+    if(widget.onTapCancel != null) widget.onTapCancel!();
   }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      key: key,
-      child: child,
-      onTap: (onDoubleTap != null) ? _onTap : onTap,    // if onDoubleTap is not used from user, then route further to onTap
-      onLongPress: onLongPress,
-      onTapDown: (onDoubleTap != null) ? _onTapDown : onTapDown,
-      onTapCancel: (onDoubleTap != null) ? _onTapCancel : onTapCancel,
-      onHighlightChanged: onHighlightChanged,
-      onHover: onHover,
-      focusColor: focusColor,
-      hoverColor: hoverColor,
-      highlightColor: highlightColor,
-      splashColor: splashColor,
-      splashFactory: splashFactory,
-      radius: radius,
-      borderRadius: borderRadius,
-      customBorder: customBorder,
-      enableFeedback: enableFeedback,
-      excludeFromSemantics: excludeFromSemantics,
-      focusNode: focusNode,
-      canRequestFocus: canRequestFocus,
-      onFocusChange: onFocusChange,
-      autofocus: autofocus,
+      key: widget.key,
+      child: widget.child,
+      onTap: (widget.onDoubleTap != null) ? _onTap : widget.onTap,
+      // if onDoubleTap is not used from user, then route further to onTap
+      onLongPress: widget.onLongPress,
+      onTapDown: (widget.onDoubleTap != null) ? _onTapDown : widget
+          .onTapDown,
+      onTapCancel: (widget.onDoubleTap != null) ? _onTapCancel : widget
+          .onTapCancel,
+      onHighlightChanged: widget.onHighlightChanged,
+      onHover: widget.onHover,
+      focusColor: widget.focusColor,
+      hoverColor: widget.hoverColor,
+      highlightColor: widget.highlightColor,
+      splashColor: widget.splashColor,
+      splashFactory: widget.splashFactory,
+      radius: widget.radius,
+      borderRadius: widget.borderRadius,
+      customBorder: widget.customBorder,
+      enableFeedback: widget.enableFeedback,
+      excludeFromSemantics: widget.excludeFromSemantics,
+      focusNode: widget.focusNode,
+      canRequestFocus: widget.canRequestFocus,
+      onFocusChange: widget.onFocusChange,
+      autofocus: widget.autofocus,
     );
   }
 }
